@@ -1,4 +1,6 @@
 import { createServer } from 'http'
+import { readFile } from 'fs'
+import { resolve } from 'path'
 
 const server = createServer((req, res) => {
     switch (req.url) {
@@ -11,9 +13,35 @@ const server = createServer((req, res) => {
             }));
             res.end();
 
-            return;
+            break;
         }
 
+
+        case '/sign-in': {
+            const path = resolve(__dirname, './pages/sign-in.html')
+            readFile(path, (error, file) => {
+                if (error) {
+                    res.writeHead(500, 'Can´t process HTML FILE');
+                    res.end();
+                    return
+                }
+
+                res.writeHead(200);
+                res.write(file);
+            })
+        }
+        case '/authenticate': {
+            let data = ''
+            req.on('data', (chunk) => {
+                data += chunk;
+            });
+            req.on('end', () => {
+                console.log(data)
+                res.writeHead(200);
+                res.write(file);
+            })
+            break
+        }
 
         // Qualquer coisa que não for /status resultará em 404
         default: {
