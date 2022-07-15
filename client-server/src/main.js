@@ -18,28 +18,21 @@ const server = createServer((req, res) => {
 
 
         case '/sign-in': {
-            const path = resolve(__dirname, './pages/sign-in.html')
-            readFile(path, (error, file) => {
+
+            const filePath = resolve(__dirname, './pages/sign-in.html')
+
+            readFile(filePath, (error, file) => {
                 if (error) {
-                    res.writeHead(500, 'Can´t process HTML FILE');
+                    res.writeHead(500, 'Cant process HTML file');
                     res.end();
-                    return
                 }
 
                 res.writeHead(200);
                 res.write(file);
+                res.end()
             })
         }
         case '/authenticate': {
-            let data = ''
-            req.on('data', (chunk) => {
-                data += chunk;
-            });
-            req.on('end', () => {
-                console.log(data)
-                res.writeHead(200);
-                res.write(data);
-            })
             break
         }
 
