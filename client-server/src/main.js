@@ -2,6 +2,9 @@ import { createServer } from 'http'
 import { readFile } from 'fs'
 import { resolve } from 'path'
 
+
+// criando servidor
+
 const server = createServer((req, res) => {
     switch (req.url) {
         case '/status': {
